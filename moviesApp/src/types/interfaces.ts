@@ -1,5 +1,6 @@
  export interface BaseMovieListProps { 
     movies: BaseMovieProps[];
+    genre_ids?: number[];
   }   
 
     export interface MovieDetailsProps extends BaseMovieProps {
@@ -34,3 +35,6 @@ export interface MovieDetailsProps extends BaseMovieProps {
     name: string;
   }[];
 }
+
+export type FilterOption = "title" | "genre";
+
