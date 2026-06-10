@@ -1,5 +1,6 @@
  export interface BaseMovieListProps { 
     movies: BaseMovieProps[];
+    selectFavourite: (movieId: number) => void;
     genre_ids?: number[];
   }   
 
