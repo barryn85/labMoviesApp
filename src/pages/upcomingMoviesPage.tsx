@@ -4,7 +4,8 @@ import { BaseMovieProps } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import AddToMustWatchIcon from "../components/cardIcons/addToMustwatch";
+
 
 const UpcomingMoviesPage: React.FC = () => {
   const { data: movies, error, isLoading, isError } = useQuery<BaseMovieProps[], Error>(
@@ -25,7 +26,7 @@ const UpcomingMoviesPage: React.FC = () => {
       title="Upcoming Movies"
       movies={movies || []}
       action={(movie: BaseMovieProps) => {
-        return <AddToFavouritesIcon {...movie} />;
+        return <AddToMustWatchIcon {...movie} />;
       }}
     />
   );
