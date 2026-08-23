@@ -5,10 +5,8 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie, getMovieCredits } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import {
-  MovieDetailsProps,
-  MovieCredits,
-} from "../types/interfaces";
+import {MovieDetailsProps,MovieCredits,} from "../types/interfaces";
+import { Link } from "react-router-dom";
 
 const MovieDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -50,8 +48,12 @@ const MovieDetailsPage: React.FC = () => {
           <ul>
             {credits?.cast.slice(0, 10).map((actor) => (
               <li key={actor.id}>
-                {actor.name} - {actor.character}
-              </li>
+  <Link to={`/actors/${actor.id}`}>
+    {actor.name}
+  </Link>
+  {" - "}
+  {actor.character}
+</li>
             ))}
           </ul>
         </>

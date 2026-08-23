@@ -70,3 +70,29 @@ export interface DiscoverMovies {
     rating: number,
     movieId: number,
   }
+
+  export interface Genre {
+    id: number;
+    name: string;
+  }
+
+  export interface GenreData {
+    genres: Genre[];
+  }
+
+  export interface Actor {
+    id: number;
+    name: string;
+    profile_path: string | null;
+  }
+  
+  export interface ActorDetails {
+    id: number;
+    name: string;
+    biography: string;
+    birthday: string | null;
+    deathday: string | null;
+    place_of_birth: string | null;
+    profile_path: string | null;
+  }
+

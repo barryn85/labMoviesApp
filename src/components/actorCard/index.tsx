@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseActorProps } from "../../types/interfaces";
 import AddActorToFavouritesIcon from "../cardIcons/addActorToFavourites";
+import RemoveActorFromFavourites from "../cardIcons/removeActorFromFavourites";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -62,6 +63,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ actor }) => {
       More Info ...
     </Button>
   </Link>
+   <RemoveActorFromFavourites actorId={actor.id} />
 </CardActions>
     </Card>
   );

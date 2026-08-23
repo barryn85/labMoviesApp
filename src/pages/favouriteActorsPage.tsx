@@ -5,6 +5,7 @@ import { getActor } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import ActorCard from "../components/actorCard";
 import Grid from "@mui/material/Grid";
+import RemoveActorFromFavourites from "../components/cardIcons/removeActorFromFavourites";
 
 const FavouriteActorsPage: React.FC = () => {
   const { favouriteActors: actorIds } = useContext(MoviesContext);
@@ -36,6 +37,7 @@ const FavouriteActorsPage: React.FC = () => {
         {favouriteActors.map((actor) => (
           <Grid item key={actor.id}>
             <ActorCard actor={actor} />
+            <RemoveActorFromFavourites actorId={actor.id} />
           </Grid>
         ))}
       </Grid>
