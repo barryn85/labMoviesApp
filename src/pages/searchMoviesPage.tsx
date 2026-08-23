@@ -54,15 +54,21 @@ const SearchMoviesPage: React.FC = () => {
           Search
         </button>
       </form>
+        
 
       {movies && (
+        <>
+        <h2>
+      Found {movies.total_results} results for "{submittedSearch}"
+        </h2>
         <PageTemplate
           title={`Search Results for "${submittedSearch}"`}
           movies={movies.results}
           action={() => null}
         />
+       </>
       )}
-    </>
+      </>
   );
 };
 
