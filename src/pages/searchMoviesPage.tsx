@@ -8,6 +8,7 @@ import { DiscoverMovies } from "../types/interfaces";
 const SearchMoviesPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const {
     data: movies,
@@ -15,8 +16,8 @@ const SearchMoviesPage: React.FC = () => {
     isLoading,
     isError,
   } = useQuery<DiscoverMovies, Error>(
-    ["movieSearch", submittedSearch],
-    () => searchMovies(submittedSearch),
+    ["movieSearch", submittedSearch, page],
+    () => searchMovies(submittedSearch, page),
     {
       enabled: submittedSearch !== "",
     }
@@ -29,6 +30,7 @@ const SearchMoviesPage: React.FC = () => {
 
     if (search !== "") {
       setSubmittedSearch(search);
+      setPage(1); 
     }
   };
 
@@ -57,17 +59,36 @@ const SearchMoviesPage: React.FC = () => {
         
 
       {movies && (
-        <>
-        <h2>
+  <>
+    <h2>
       Found {movies.total_results} results for "{submittedSearch}"
-        </h2>
-        <PageTemplate
-          title={`Search Results for "${submittedSearch}"`}
-          movies={movies.results}
-          action={() => null}
-        />
-       </>
-      )}
+    </h2>
+
+    <PageTemplate
+      title={`Search Results for "${submittedSearch}"`}
+      movies={movies.results}
+      action={() => null}
+    />
+
+    <button
+      disabled={page === 1}
+      onClick={() => setPage(page - 1)}
+    >
+      Previous
+    </button>
+
+    <span>
+      Page {movies.page} of {movies.total_pages}
+    </span>
+
+    <button
+      disabled={page >= movies.total_pages}
+      onClick={() => setPage(page + 1)}
+    >
+      Next
+    </button>
+  </>
+)}
       </>
   );
 };
