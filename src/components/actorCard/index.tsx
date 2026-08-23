@@ -9,6 +9,7 @@ import CardActions from "@mui/material/CardActions";
 import { Link } from "react-router-dom";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseActorProps } from "../../types/interfaces";
+import AddActorToFavouritesIcon from "../cardIcons/addActorToFavourites";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -50,16 +51,18 @@ const ActorCard: React.FC<ActorCardProps> = ({ actor }) => {
       </CardContent>
 
       <CardActions>
-        <Link to={`/actors/${actor.id}`}>
-          <Button
-            variant="outlined"
-            size="medium"
-            color="primary"
-          >
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
+  <AddActorToFavouritesIcon actorId={actor.id} />
+
+  <Link to={`/actors/${actor.id}`}>
+    <Button
+      variant="outlined"
+      size="medium"
+      color="primary"
+    >
+      More Info ...
+    </Button>
+  </Link>
+</CardActions>
     </Card>
   );
 };

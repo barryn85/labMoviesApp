@@ -1,19 +1,33 @@
-import React from "react"; // replace existing react import
+import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-//import useMovie from "../hooks/useMovie";  Redundant
-import { getMovie } from "../api/tmdb-api";
+import { getMovie, getMovieCredits } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { MovieDetailsProps } from "../types/interfaces";
+import {
+  MovieDetailsProps,
+  MovieCredits,
+} from "../types/interfaces";
 
-
-const MovieDetailsPage: React.FC= () => {
+const MovieDetailsPage: React.FC = () => {
   const { id } = useParams();
-  const { data: movie, error, isLoading, isError } = useQuery<MovieDetailsProps, Error>(
+
+  const {
+    data: movie,
+    error,
+    isLoading,
+    isError,
+  } = useQuery<MovieDetailsProps, Error>(
     ["movie", id],
-    ()=> getMovie(id||"")
+    () => getMovie(id || "")
+  );
+
+  const {
+    data: credits,
+  } = useQuery<MovieCredits, Error>(
+    ["movieCredits", id],
+    () => getMovieCredits(id || "")
   );
 
   if (isLoading) {
@@ -21,22 +35,31 @@ const MovieDetailsPage: React.FC= () => {
   }
 
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <h1>{error?.message}</h1>;
   }
 
   return (
-    <>
-      {movie ? (
+  <>
+    {movie ? (
+      <PageTemplate movie={movie}>
         <>
-        <PageTemplate movie={movie}> 
           <MovieDetails {...movie} />
-        </PageTemplate>
-      </>
+
+          <h2>Cast</h2>
+
+          <ul>
+            {credits?.cast.slice(0, 10).map((actor) => (
+              <li key={actor.id}>
+                {actor.name} - {actor.character}
+              </li>
+            ))}
+          </ul>
+        </>
+      </PageTemplate>
     ) : (
       <p>Waiting for movie details</p>
     )}
-    </>
-  );
+  </>
+);
 };
-
 export default MovieDetailsPage;
