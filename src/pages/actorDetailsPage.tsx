@@ -1,9 +1,9 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getActor } from "../api/tmdb-api";
+import {getActor, getActorMovieCredits,} from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import { ActorDetailsProps } from "../types/interfaces";
+import {ActorDetailsProps,ActorMovieCredits, } from "../types/interfaces";
 
 const ActorDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -16,6 +16,11 @@ const ActorDetailsPage: React.FC = () => {
   } = useQuery<ActorDetailsProps, Error>(
     ["actor", id],
     () => getActor(id!)
+  );
+
+  const { data: credits } = useQuery<ActorMovieCredits, Error>(
+    ["actorCredits", id],
+    () => getActorMovieCredits(id!)
   );
 
   if (isLoading) return <Spinner />;
@@ -33,9 +38,30 @@ const ActorDetailsPage: React.FC = () => {
         />
       )}
 
-      <p><strong>Born:</strong> {actor?.birthday}</p>
-      <p><strong>Place of Birth:</strong> {actor?.place_of_birth}</p>
+      <p>
+        <strong>Born:</strong> {actor?.birthday}
+      </p>
+
+      <p>
+        <strong>Place of Birth:</strong> {actor?.place_of_birth}
+      </p>
+
       <p>{actor?.biography}</p>
+
+      <h2>Movie Credits</h2>
+
+      <ul>
+        {credits?.cast
+          ?.slice(0, 10)
+          .map((movie) => (
+            <li key={movie.id}>
+              <Link to={`/movies/${movie.id}`}>
+                {movie.title}
+              </Link>
+              {" "}as {movie.character}
+            </li>
+          ))}
+      </ul>
     </>
   );
 };

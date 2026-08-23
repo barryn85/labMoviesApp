@@ -128,3 +128,20 @@ export const getActor = (id: string) => {
       throw error;
     });
 };
+
+export const getActorMovieCredits = (id: string) => {
+  return fetch(
+    `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Unable to fetch actor movie credits. Response status: ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
