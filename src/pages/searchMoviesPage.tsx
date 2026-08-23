@@ -4,6 +4,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import { searchMovies } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import { DiscoverMovies } from "../types/interfaces";
+import { Typography } from "@mui/material";
 
 const SearchMoviesPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -69,7 +70,7 @@ const SearchMoviesPage: React.FC = () => {
       movies={movies.results}
       action={() => null}
     />
-
+    <Typography align="center">
     <button
       disabled={page === 1}
       onClick={() => setPage(page - 1)}
@@ -77,9 +78,9 @@ const SearchMoviesPage: React.FC = () => {
       Previous
     </button>
 
-    <span>
-      Page {movies.page} of {movies.total_pages}
-    </span>
+    <span style={{ margin: "0 10px" }}>
+  Page {movies.page} of {movies.total_pages}
+</span>
 
     <button
       disabled={page >= movies.total_pages}
@@ -87,6 +88,7 @@ const SearchMoviesPage: React.FC = () => {
     >
       Next
     </button>
+    </Typography>
   </>
 )}
       </>
