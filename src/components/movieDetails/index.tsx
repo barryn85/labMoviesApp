@@ -10,6 +10,9 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
+import { getMovieVideos } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+
 
 const styles = {
     chipSet: {
@@ -33,7 +36,19 @@ const styles = {
 
 const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
 
-    const [drawerOpen, setDrawerOpen] = useState(false); // New
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const { data: videos } = useQuery(
+    ["videos", movie.id],
+    () => getMovieVideos(movie.id)
+  );
+
+  const trailer = videos?.find(
+    (video: any) =>
+      video.site === "YouTube" &&
+      video.type === "Trailer"
+  );
+
 
     return (
         <>
@@ -79,7 +94,28 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
+
+            {videos && videos.length > 0 && (
+  <>
+    {trailer && (
+  <>
+    <Typography variant="h5" component="h3" sx={{ mt: 3 }}>
+      Trailer
+    </Typography>
+
+    <iframe
+      width="560"
+      height="315"
+      src={`https://www.youtube.com/embed/${trailer.key}`}
+      title="Movie Trailer"
+      allowFullScreen
+    />
+  </>
+)}
+  </>
+)}
         </>
     );
+    
 };
 export default MovieDetails;

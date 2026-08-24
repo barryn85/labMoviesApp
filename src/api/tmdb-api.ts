@@ -162,3 +162,18 @@ export const getMovieCredits = (id: string | number) => {
       throw error;
     });
 };
+
+export const getMovieVideos = (id: string | number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Unable to fetch videos. Response status: ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .then((json) => json.results);
+};
