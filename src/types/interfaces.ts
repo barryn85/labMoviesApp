@@ -1,3 +1,24 @@
+ export interface BaseMovieProps {
+    title: string;
+    budget: number;
+    homepage: string | undefined;
+    id: number;
+    imdb_id: string;
+    original_language: string;
+    overview: string;
+    release_date: string;
+    vote_average: number;
+    popularity: number;
+    poster_path?: string;
+    tagline: string;
+    runtime: number;
+    revenue: number;
+    vote_count: number;
+    favourite?: boolean;
+    genre_ids?: number[];
+  }
+ 
+ 
  export interface BaseMovieListProps { 
     movies: BaseMovieProps[];
     action: (m: BaseMovieProps) => React.ReactNode;
@@ -77,7 +98,7 @@ export interface DiscoverMovies {
   }
 
   export interface GenreData {
-    genres: Genre[];
+    genre: Genre[];
   }
 
   export interface Actor {
@@ -96,3 +117,12 @@ export interface DiscoverMovies {
     profile_path: string | null;
   }
 
+export interface FantasyMovie {
+  id: number;
+  title: string;
+  overview: string;
+  genres: string;
+  releaseDate: string;
+  runtime: number;
+  productionCompany: string;
+}

@@ -15,6 +15,8 @@ import SearchMoviesPage from "./pages/searchMoviesPage";
 import ActorsPage from "./pages/actorsPage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
 import FavouriteActorsPage from "./pages/favouriteActorsPage";
+import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
+import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 
 
 const queryClient = new QueryClient({
@@ -48,9 +50,12 @@ const App = () => {
         <Route path="/actors" element={<ActorsPage/>} />
         <Route path="/actors/:id" element={<ActorDetailsPage/>} />
         <Route path="/actors/favourites" element={<FavouriteActorsPage/>} />
+        <Route path="/fantasy/create" element={<CreateFantasyMoviePage />}/>
+        <Route path="/fantasy" element={<FantasyMoviesPage />}/>
       </Routes>
+
       </MoviesContextProvider>
-    </BrowserRouter>
+      </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

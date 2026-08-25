@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import PageTemplate from "../components/templateMovieListPage";
 import { searchMovies, getGenres } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import { DiscoverMovies, GenreData } from "../types/interfaces";
+import { GenreData } from "../types/interfaces";
 import { Typography } from "@mui/material";
 
 const SearchMoviesPage: React.FC = () => {
@@ -14,19 +14,17 @@ const SearchMoviesPage: React.FC = () => {
   const [genre, setGenre] = useState("0");
   const [minimumRating, setMinimumRating] = useState("0");
 
-  const {
-    data: genresData,
-  } = useQuery<GenreData, Error>(
+  const { data: genresData } = useQuery<GenreData, Error>(
     ["genres"],
     getGenres
   );
 
   const {
-    data: movies,
+    data: movieResults,
     error,
     isLoading,
     isError,
-  } = useQuery<DiscoverMovies, Error>(
+  } = useQuery(
     ["movieSearch", submittedSearch, page],
     () => searchMovies(submittedSearch, page),
     {
@@ -52,11 +50,11 @@ const SearchMoviesPage: React.FC = () => {
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <h1>{(error as Error).message}</h1>;
   }
 
-  const filteredMovies = movies
-    ? movies.results.filter((movie) => {
+  const filteredMovies = movieResults
+    ? movieResults.results.filter((movie: any) => {
         const matchesGenre =
           genre === "0" ||
           movie.genre_ids?.includes(Number(genre));
@@ -70,27 +68,49 @@ const SearchMoviesPage: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          marginBottom: "20px",
+          textAlign: "center",
+        }}
+      >
         <input
           type="text"
-          placeholder="Search for a movie..."
+          placeholder="Search movies..."
           value={searchTerm}
           onChange={(event) =>
             setSearchTerm(event.target.value)
           }
+          style={{
+            width: "450px",
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+          }}
         />
 
-        <button type="submit">
+        <button
+          type="submit"
+          style={{
+            padding: "10px 20px",
+            fontSize: "16px",
+            marginRight: "10px",
+          }}
+        >
           Search
         </button>
 
         <select
           value={genre}
           onChange={(e) => setGenre(e.target.value)}
+          style={{
+            padding: "10px",
+            fontSize: "16px",
+            marginRight: "10px",
+          }}
         >
-          <option value="0">
-            All Genres
-          </option>
+          <option value="0">All Genres</option>
 
           {genresData?.genres.map((genre) => (
             <option
@@ -112,45 +132,55 @@ const SearchMoviesPage: React.FC = () => {
           onChange={(e) =>
             setMinimumRating(e.target.value)
           }
+          style={{
+            width: "150px",
+            padding: "10px",
+            fontSize: "16px",
+          }}
         />
       </form>
 
-      {movies && (
+      {movieResults && (
         <>
-          <h2>
-            Found {filteredMovies.length} results
-            for "{submittedSearch}"
+          <h2 style={{ textAlign: "center" }}>
+            Found {filteredMovies.length} results for "
+            {submittedSearch}"
           </h2>
 
           <PageTemplate
-            title={`Search Results for "${submittedSearch}"`}
+            title={`Movies matching "${submittedSearch}"`}
             movies={filteredMovies}
             action={() => null}
           />
-
-          <Typography align="center">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Previous
-            </button>
-
-            <span style={{ margin: "0 10px" }}>
-              Page {movies.page} of{" "}
-              {movies.total_pages}
-            </span>
-
-            <button
-              disabled={
-                page >= movies.total_pages
-              }
-              onClick={() => setPage(page + 1)}
-            >
-              Next
-            </button>
-          </Typography>
         </>
+      )}
+
+      {movieResults && (
+        <Typography
+          align="center"
+          sx={{ mt: 3, mb: 3 }}
+        >
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Previous
+          </button>
+
+          <span style={{ margin: "0 15px" }}>
+            Page {movieResults.page} of{" "}
+            {movieResults.total_pages}
+          </span>
+
+          <button
+            disabled={
+              page >= movieResults.total_pages
+            }
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
+        </Typography>
       )}
     </>
   );
