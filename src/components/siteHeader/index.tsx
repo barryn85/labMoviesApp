@@ -49,7 +49,7 @@ const SiteHeader: React.FC = () => {
 
   return (
     <>
-      <AppBar position="fixed" elevation={0} sx={{ backgroundColor: "#2e7d32" }}>
+      <AppBar position="sticky" elevation={0} sx={{ backgroundColor: "#2e7d32" }}>
         <Toolbar>
           <Typography variant="h4" sx={styles.title}>
             TMDB Client
@@ -101,6 +101,7 @@ const SiteHeader: React.FC = () => {
                   key={opt.label}
                   color="inherit"
                   onClick={() => handleMenuSelect(opt.path)}
+                  sx={{ mx: 1 }}
                 >
                   {opt.label}
                 </Button>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import IconButton from "@mui/material/IconButton";
-import { BaseMovieProps } from "../../../types/interfaces";
+import { BaseMovieProps } from "../../types/interfaces";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 const AddToMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
