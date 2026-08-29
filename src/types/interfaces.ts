@@ -57,6 +57,7 @@ export interface MovieListPageTemplateProps
 }
 
 export interface Review {
+  id: number;
   author: string;
   content: string;
   agree: boolean;

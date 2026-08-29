@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import { Link } from "react-router-dom";
 import img from "../../images/film-poster-placeholder.png";
-import { BaseActorProps } from "../../types/interfaces";
+import { Actor} from "../../types/interfaces";
 import AddActorToFavouritesIcon from "../cardIcons/addActorToFavourites";
 import RemoveActorFromFavourites from "../cardIcons/removeActorFromFavourites";
 
@@ -18,7 +18,7 @@ const styles = {
 };
 
 interface ActorCardProps {
-  actor: BaseActorProps;
+  actor: Actor;
 }
 
 const ActorCard: React.FC<ActorCardProps> = ({ actor }) => {
