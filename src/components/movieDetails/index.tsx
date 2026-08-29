@@ -5,13 +5,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { MovieDetailsProps } from "../../types/interfaces";
+import { MovieDetailsProps, MovieVideo } from "../../types/interfaces";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
 import { getMovieVideos } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
+
 
 
 const styles = {
@@ -38,13 +39,13 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const { data: videos } = useQuery(
+  const { data: videos } = useQuery<MovieVideo[]>(
     ["videos", movie.id],
     () => getMovieVideos(movie.id)
   );
 
   const trailer = videos?.find(
-    (video: any) =>
+    (video) =>
       video.site === "YouTube" &&
       video.type === "Trailer"
   );
@@ -78,7 +79,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                 />
                 <Chip
                     icon={<StarRate />}
-                    label={`${movie.vote_average} (${movie.vote_count}`}
+                    label={`${movie.vote_average} (${movie.vote_count})`}
                 />
                 <Chip label={`Released: ${movie.release_date}`} />
             </Paper>

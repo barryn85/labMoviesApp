@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";//update existing import
+import React, { ChangeEvent } from "react";//update existing import
 import { FilterOption } from "../../types/interfaces"
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -14,6 +14,7 @@ import Select from "@mui/material/Select";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
+import { GenreData } from "../../types/interfaces";
 
 const styles = {
   root: {
@@ -46,7 +47,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
   }
   const genres = data?.genres || [];
   if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
+    genres.unshift({ id: 0, name: "All" });
   }
 
   const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
