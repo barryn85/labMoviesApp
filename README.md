@@ -77,3 +77,5 @@ Trailers: https://www.youtube.com/watch?v=stWKl86iTeg
 https://developer.themoviedb.org/docs/getting-started
 
 https://mui.com/material-ui/react-pagination/
+
+https://vercel.com/docs/git

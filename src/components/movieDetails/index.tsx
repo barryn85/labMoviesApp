@@ -30,8 +30,9 @@ const styles = {
     },
     fab: {
         position: "fixed",
-        top: 50,
+        top: 100,
         right: 2,
+        zIndex: 1200,
     },
 };
 
