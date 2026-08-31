@@ -79,3 +79,5 @@ https://developer.themoviedb.org/docs/getting-started
 https://mui.com/material-ui/react-pagination/
 
 https://vercel.com/docs/git
+
+https://stackoverflow.com/questions/10865237/website-header-hiding-behind-content-when-position-is-fixed
